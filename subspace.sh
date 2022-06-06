@@ -23,13 +23,13 @@ echo -e '\033[0m'
 
 
 function deleteNode {
-    systemctl stop subspace-node subspace-farmer
-    systemctl disable subspace-node subspace-farmer
-    deluser subspace
-    rm -rf /var/lib/subspace
-    rm -rf /root/.local/share/subspace*
-    rm /usr/local/bin/subspace*
-    rm /etc/systemd/system/subspace*
+systemctl stop subspace-node subspace-farmer
+systemctl disable subspace-node subspace-farmer
+deluser subspace
+rm -rf /var/lib/subspace
+rm -rf /root/.local/share/subspace*
+rm /usr/local/bin/subspace*
+rm /etc/systemd/system/subspace*
 }
 
 function updateNode {
@@ -37,50 +37,53 @@ function updateNode {
 }
 
 function installNode {
-    read -p 'SUBSPACE_WALLET_ADDRESS: ' SUBSPACE_WALLET_ADDRESS
-    read -p 'SUBSPACE_NODE_NAME: ' SUBSPACE_NODE_NAME
-    echo Installing...
-    cd ~
-    VERSION=gemini-1b-2022-june-05
-    wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
-    wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
-    mv subspace* /usr/local/bin/
-    chmod +x /usr/local/bin/subspace*
-    adduser --system --home=/var/lib/subspace subspace
+read -p 'SUBSPACE_WALLET_ADDRESS: ' SUBSPACE_WALLET_ADDRESS
+read -p 'SUBSPACE_NODE_NAME: ' SUBSPACE_NODE_NAME
+echo Installing...
+cd ~
+VERSION=gemini-1b-2022-june-05
+wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
+wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
+mv subspace* /usr/local/bin/
+chmod +x /usr/local/bin/subspace*
+adduser --system --home=/var/lib/subspace subspace
 
-    echo "[Unit]
-        Description=Subspace Node
-        After=network.target
-        [Service]
-        Type=simple
-        User=subspace
-        ExecStart=/usr/local/bin/subspace-node 
-        --chain gemini-1 
-        --execution wasm 
-        --pruning 1024 
-        --keep-blocks 1024 
-        --validator 
-        --name $SUBSPACE_NODE_NAME 
-        Restart=always" > /etc/systemd/system/subspace-node.service
+echo "[Unit]
+Description=Subspace Node
+After=network.target
+[Service]
+Type=simple
+User=subspace
+ExecStart=/usr/local/bin/subspace-node 
+--chain gemini-1 
+--execution wasm 
+--pruning 1024 
+--keep-blocks 1024 
+--validator 
+--name $SUBSPACE_NODE_NAME 
+Restart=always" > /etc/systemd/system/subspace-node.service
 
-    echo "[Unit]
-        Description=Subspace Farmer
-        Requires=subspace-node.service
-        After=network.target
-        After=subspace-node.service
-        [Service]
-        Type=simple
-        User=subspace
-        ExecStart=/usr/local/bin/subspace-farmer farm --reward-address=$SUBSPACE_WALLET_ADDRESS --plot-size=300G
-        Restart=always
-        RestartSec=10
-        LimitNOFILE=10000
-        [Install]
-        WantedBy=multi-user.target" > /etc/systemd/system/subspace-farmer.service
+echo "[Unit]
+Description=Subspace Farmer
+Requires=subspace-node.service
+After=network.target
+After=subspace-node.service
+[Service]
+Type=simple
+User=subspace
+ExecStart=/usr/local/bin/subspace-farmer farm 
+--reward-address $SUBSPACE_WALLET_ADDRESS 
+--plot-size 200G
+--in-peers 100
+Restart=always
+RestartSec=10
+LimitNOFILE=10000
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/subspace-farmer.service
 
-    systemctl daemon-reload
-    systemctl start subspace-node
-    systemctl start subspace-farmer
+systemctl daemon-reload
+systemctl start subspace-node
+systemctl start subspace-farmer
 }
 
 PS3='Please enter your choice: '
