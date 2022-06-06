@@ -59,6 +59,7 @@ ExecStart=/usr/local/bin/subspace-node
 --execution wasm 
 --pruning 1024 
 --keep-blocks 1024 
+--in-peers 100 
 --validator 
 --name $SUBSPACE_NODE_NAME 
 Restart=always" > /etc/systemd/system/subspace-node.service
@@ -71,10 +72,7 @@ After=subspace-node.service
 [Service]
 Type=simple
 User=subspace
-ExecStart=/usr/local/bin/subspace-farmer farm 
---reward-address $SUBSPACE_WALLET_ADDRESS 
---plot-size 200G 
---in-peers 100
+ExecStart=/usr/local/bin/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
 Restart=always
 RestartSec=10
 LimitNOFILE=10000
