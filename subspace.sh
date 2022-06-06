@@ -73,7 +73,7 @@ Type=simple
 User=subspace
 ExecStart=/usr/local/bin/subspace-farmer farm 
 --reward-address $SUBSPACE_WALLET_ADDRESS 
---plot-size 200G
+--plot-size 200G 
 --in-peers 100
 Restart=always
 RestartSec=10
