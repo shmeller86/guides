@@ -39,9 +39,10 @@ function updateNode {
 function installNode {
 read -p 'SUBSPACE_WALLET_ADDRESS: ' SUBSPACE_WALLET_ADDRESS
 read -p 'SUBSPACE_NODE_NAME: ' SUBSPACE_NODE_NAME
+read -p 'VERSION: ' VERSION
 echo Installing...
 cd ~
-VERSION=gemini-1b-2022-june-05
+# VERSION=gemini-1b-2022-june-05
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
 mv subspace* /usr/local/bin/
