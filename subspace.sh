@@ -55,14 +55,7 @@ After=network.target
 [Service]
 Type=simple
 User=subspace
-ExecStart=/usr/local/bin/subspace-node 
---chain gemini-1 
---execution wasm 
---pruning 1024 
---keep-blocks 1024 
---in-peers 100 
---validator 
---name $SUBSPACE_NODE_NAME 
+ExecStart=/usr/local/bin/subspace-node --chain gemini-1 --execution wasm --pruning 1024 --keep-blocks 1024 --in-peers 100 --validator --name $SUBSPACE_NODE_NAME 
 Restart=always" > /etc/systemd/system/subspace-node.service
 
 echo "[Unit]
