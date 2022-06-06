@@ -41,8 +41,9 @@ function installNode {
     read -p 'SUBSPACE_NODE_NAME: ' SUBSPACE_NODE_NAME
     echo Installing...
     cd ~
-    wget -O subspace-node https://github.com/subspace/subspace/releases/download/gemini-1b-2022-june-03/subspace-node-ubuntu-x86_64-gemini-1b-2022-june-03
-    wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/gemini-1b-2022-june-03/subspace-farmer-ubuntu-x86_64-gemini-1b-2022-june-03
+    VERSION=gemini-1b-2022-june-05
+    wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
+    wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
     mv subspace* /usr/local/bin/
     chmod +x /usr/local/bin/subspace*
     adduser --system --home=/var/lib/subspace subspace
