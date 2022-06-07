@@ -51,8 +51,8 @@ SUBSPACE_WALLET_ADDRESS="${SUBSPACE_WALLET_ADDRESS:-$SUBSPACE_WALLET_ADDRESS_DEF
 SUBSPACE_NODE_NAME="${SUBSPACE_NODE_NAME:-$SUBSPACE_NODE_NAME_DEFAULT}"
 TYPE="${TYPE:-$TYPE_DEFAULT}"
 
-echo "export SUBSPACE_WALLET_ADDRESS="SUBSPACE_WALLET_ADDRESS"" >> ~/.bash_profile
-echo "export SUBSPACE_NODE_NAME="SUBSPACE_NODE_NAME"" >> ~/.bash_profile
+echo "export SUBSPACE_WALLET_ADDRESS="$SUBSPACE_WALLET_ADDRESS"" >> ~/.bash_profile
+echo "export SUBSPACE_NODE_NAME="$SUBSPACE_NODE_NAME"" >> ~/.bash_profile
 
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
