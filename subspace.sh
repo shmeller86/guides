@@ -44,6 +44,7 @@ SUBSPACE_NODE_NAME_DEFAULT=$SUBSPACE_NODE_NAME
 
 read -p "SUBSPACE_WALLET_ADDRESS: [default:$SUBSPACE_WALLET_ADDRESS_DEFAULT]" SUBSPACE_WALLET_ADDRESS
 read -p "SUBSPACE_NODE_NAME: [default:$SUBSPACE_NODE_NAME_DEFAULT]" SUBSPACE_NODE_NAME
+read -p "TYPE (1-bootstrap;2-list;3-default): [default:1]" TYPE
 
 SUBSPACE_WALLET_ADDRESS="${SUBSPACE_WALLET_ADDRESS:-$SUBSPACE_WALLET_ADDRESS_DEFAULT}"
 SUBSPACE_NODE_NAME="${SUBSPACE_NODE_NAME:-$SUBSPACE_NODE_NAME_DEFAULT}"
@@ -59,6 +60,46 @@ mv subspace* /usr/local/bin/
 chmod +x /usr/local/bin/subspace*
 adduser --system --home=/var/lib/subspace subspace
 
+if [ $TYPE == 1 ]
+then
+echo "[Unit]
+Description=Subspace Node
+After=network.target
+[Service]
+Type=simple
+User=subspace
+ExecStart=/usr/local/bin/subspace-node \
+--chain gemini-1 \
+--execution wasm \
+--pruning 1024 \
+--keep-blocks 1024 \
+--validator \
+--rpc-cors all \
+--rpc-methods safe \
+--unsafe-ws-external \
+--reserved-nodes="/dns/bootstrap-0.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWF9CgB8bDvWCvzPPZrWG3awjhS7gPFu7MzNPkF9F9xWwc" \
+--reserved-nodes="/dns/bootstrap-1.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWLrpSArNaZ3Hvs4mABwYGDY1Rf2bqiNTqUzLm7koxedQQ" \
+--reserved-nodes="/dns/bootstrap-2.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWNN5uuzPtDNtWoLU28ZDCQP7HTdRjyWbNYo5EA6fZDAMD" \
+--reserved-nodes="/dns/bootstrap-3.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWM47uyGtvbUFt5tmWdFezNQjwbYZmWE19RpWhXgRzuEqh" \
+--reserved-nodes="/dns/bootstrap-4.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWNMEKxFZm9mbwPXfQ3LQaUgin9JckCq7TJdLS2UnH6E7z" \
+--reserved-nodes="/dns/bootstrap-5.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWFfEtDmpb8BWKXoEAgxkKAMfxU2yGDq8nK87MqnHvXsok" \
+--reserved-nodes="/dns/bootstrap-6.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWHSeob6t43ukWAGnkTcQEoRaFSUWphGDCKF1uefG2UGDh" \
+--reserved-nodes="/dns/bootstrap-7.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWKwrGSmaGJBD29agJGC3MWiA7NZt34Vd98f6VYgRbV8hH" \
+--reserved-nodes="/dns/bootstrap-8.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWCXFrzVGtAzrTUc4y7jyyvhCcNTAcm18Zj7UN46whZ5Bm" \
+--reserved-nodes="/dns/bootstrap-9.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWNGxWQ4sajzW1akPRZxjYM5TszRtsCnEiLhpsGrsHrFC6" \
+--reserved-nodes="/dns/bootstrap-10.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWNGf1qr5411JwPHgwqftjEL6RgFRUEFnsJpTMx6zKEdWn" \
+--reserved-nodes="/dns/bootstrap-11.gemini-1b.subspace.network/tcp/30333/p2p/12D3KooWM7Qe4rVfzUAMucb5GTs3m4ts5ZrFg83LZnLhRCjmYEJK" \
+--reserved-only
+--name $SUBSPACE_NODE_NAME 
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/subspace-node.service
+fi
+
+if [ $TYPE == 2 ]
+then
 echo "[Unit]
 Description=Subspace Node
 After=network.target
@@ -71,7 +112,6 @@ $(wget -qO- https://raw.githubusercontent.com/shmeller86/guides/master/subspace_
 --execution wasm \
 --pruning 1024 \
 --keep-blocks 1024 \
---in-peers 100 \
 --validator \
 --name $SUBSPACE_NODE_NAME 
 Restart=on-failure
@@ -79,6 +119,32 @@ RestartSec=10
 LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/subspace-node.service
+fi
+
+if [ $TYPE == 3 ]
+then
+echo "[Unit]
+Description=Subspace Node
+After=network.target
+[Service]
+Type=simple
+User=subspace
+ExecStart=/usr/local/bin/subspace-node \
+--chain gemini-1 \
+--execution wasm \
+--pruning 1024 \
+--keep-blocks 1024 \
+--validator \
+--name $SUBSPACE_NODE_NAME 
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65535
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/subspace-node.service
+fi
+
+
+
 
 echo "[Unit]
 Description=Subspace Farmer
