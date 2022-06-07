@@ -37,11 +37,20 @@ function updateNode {
 }
 
 function installNode {
-read -p 'SUBSPACE_WALLET_ADDRESS: ' SUBSPACE_WALLET_ADDRESS
-read -p 'SUBSPACE_NODE_NAME: ' SUBSPACE_NODE_NAME
+source ~/.bash_profile;
+
+SUBSPACE_WALLET_ADDRESS_DEFAULT=$SUBSPACE_WALLET_ADDRESS
+SUBSPACE_NODE_NAME_DEFAULT=$SUBSPACE_NODE_NAME
+
+read -p "SUBSPACE_WALLET_ADDRESS: [default:$SUBSPACE_WALLET_ADDRESS_DEFAULT]" SUBSPACE_WALLET_ADDRESS
+read -p "SUBSPACE_NODE_NAME: [default:$SUBSPACE_NODE_NAME_DEFAULT]" SUBSPACE_NODE_NAME
+
+SUBSPACE_WALLET_ADDRESS="${SUBSPACE_WALLET_ADDRESS:-$SUBSPACE_WALLET_ADDRESS_DEFAULT}"
+SUBSPACE_NODE_NAME="${SUBSPACE_NODE_NAME:-$SUBSPACE_NODE_NAME_DEFAULT}"
+
 echo "export SUBSPACE_WALLET_ADDRESS="SUBSPACE_WALLET_ADDRESS"" >> ~/.bash_profile
 echo "export SUBSPACE_NODE_NAME="SUBSPACE_NODE_NAME"" >> ~/.bash_profile
-echo Installing...
+
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
