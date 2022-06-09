@@ -162,9 +162,9 @@ LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/subspace-farmer.service
 
+systemctl enable subspace-node subspace-farmer
 systemctl daemon-reload
-systemctl start subspace-node
-systemctl start subspace-farmer
+systemctl start subspace-node subspace-farmer
 }
 
 function installNode {
@@ -294,9 +294,9 @@ LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/subspace-farmer.service
 
+systemctl enable subspace-node subspace-farmer
 systemctl daemon-reload
-systemctl start subspace-node
-systemctl start subspace-farmer
+systemctl start subspace-node subspace-farmer
 }
 
 PS3='Please enter your choice: '
