@@ -36,7 +36,7 @@ echo -e '\033[0m'
 }
 
 function installNode {
-read -p "HTTP [example:https://eth-goerli.alchemyapi.io/v2/xZXxxxxxxxxxxc2q_bzxxxxxxxxxxWTN]:" ALCHEMY_HTTP
+read -p "HTTP [example:https://eth-goerli.alchemyapi.io/v2/XXXXXXXXXXXXXXXXXX]:" ALCHEMY_HTTP
 echo "export ALCHEMY_HTTP="$ALCHEMY_HTTP"" >> ~/.bash_profile
 
 
@@ -74,7 +74,7 @@ Type=simple
 User=$USER
 WorkingDirectory=$HOME/pathfinder/py
 Environment=PATH="$HOME/pathfinder/py/.venv/bin:\$PATH"
-ExecStart=$HOME/pathfinder/target/release/pathfinder --ethereum.url $ALCHEMY_KEY
+ExecStart=$HOME/pathfinder/target/release/pathfinder --ethereum.url $ALCHEMY_HTTP
 Restart=always
 RestartSec=10
 LimitNOFILE=10000
