@@ -18,7 +18,7 @@ echo -e '                                                           `""|"-->####
 echo -e '                                                                \  \                    '
 echo -e '                                                               <- O -)                  '
 echo -e '                                                                 `"                     '
-echo -e '\033[1;32m UPTICK NODE                                                                    '
+echo -e '\033[1;32m GEAR NODE                                                                    '
 echo -e '\033[0m'
 
 
@@ -35,55 +35,48 @@ echo -e '\033[0m'
 }
 
 function installNode {
-sudo apt update && apt upgrade -y
-sudo apt install curl tar wget clang pkg-config libssl-dev jq build-essential bsdmainutils git make ncdu unzip -y
+read -p "GEAR_MONIKER:" GEAR_MONIKER
 
-wget -O go1.17.1.linux-amd64.tar.gz https://golang.org/dl/go1.17.linux-amd64.tar.gz
-rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz && rm go1.17.1.linux-amd64.tar.gz
-echo 'export GOROOT=/usr/local/go' >> $HOME/.bash_profile
-echo 'export GOPATH=$HOME/go' >> $HOME/.bash_profile
-echo 'export GO111MODULE=on' >> $HOME/.bash_profile
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
+wget https://builds.gear.rs/gear-nightly-linux-x86_64.tar.xz && \
+tar xvf gear-nightly-linux-x86_64.tar.xz && \
+rm gear-nightly-linux-x86_64.tar.xz && \
+chmod +x gear-node
+
+apt install -y clang build-essential
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+rustup toolchain add nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+
+git clone https://github.com/gear-tech/gear.git
+cd gear
+
+cargo build -p gear-node --release
 
 
-read -p "UPTICK_MONIKER:" UPTICK_MONIKER
-read -p "UPTICK_WALLET:" UPTICK_WALLET
-UPTICK_CHAIN=uptick_7776-1
-echo 'export UPTICK_MONIKER='${UPTICK_MONIKER} >> $HOME/.bash_profile
-echo 'export UPTICK_WALLET='${UPTICK_WALLET} >> $HOME/.bash_profile
-echo 'export UPTICK_CHAIN='${UPTICK_CHAIN} >> $HOME/.bash_profile
-source $HOME/.bash_profile
-
-
-git clone https://github.com/UptickNetwork/uptick.git
-cd $HOME/uptick
-git checkout v0.2.0
-make install
-
-uptickd init $UPTICK_MONIKER --chain-id $UPTICK_CHAIN
-
-curl https://raw.githubusercontent.com/UptickNetwork/uptick-testnet/main/uptick_7776-1/genesis.json > $HOME/.uptickd/config/genesis.json
-uptickd unsafe-reset-all
-
-sudo tee /etc/systemd/system/uptickd.service > /dev/null <<EOF
+tee <<EOF >/dev/null /etc/systemd/system/gear-node.service
 [Unit]
-Description=Uptick Network
-After=network-online.target
+Description=Gear Node
+After=network.target
 
 [Service]
-User=$USER
-ExecStart=$(which uptickd) start
-Restart=on-failure
-RestartSec=10
-LimitNOFILE=65535
+Type=simple
+User=root
+WorkingDirectory=/root/
+ExecStart=/root/gear-node --name '${GEAR_MONIKER}' --telemetry-url 'ws://telemetry-backend-shard.gear-tech.io:32001/submit 0'
+Restart=always
+RestartSec=3
+LimitNOFILE=10000
 
 [Install]
 WantedBy=multi-user.target
+
 EOF
 
-sudo systemctl daemon-reload
-sudo systemctl enable uptickd
-sudo systemctl restart uptickd
+
+systemctl start gear-node
+systemctl enable gear-node
 }
 
 PS3='Please enter your choice: '

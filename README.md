@@ -22,3 +22,8 @@ wget -O starknet.sh https://raw.githubusercontent.com/shmeller86/guides/master/s
 ```console
 wget -O uptick.sh https://raw.githubusercontent.com/shmeller86/guides/master/uptick.sh && chmod +x uptick.sh && ./uptick.sh
 ```
+
+### GEAR
+```console
+wget -O gear.sh https://raw.githubusercontent.com/shmeller86/guides/master/gear.sh && chmod +x gear.sh && ./gear.sh
+```
