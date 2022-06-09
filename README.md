@@ -8,7 +8,7 @@ wget -O subspace.sh https://raw.githubusercontent.com/shmeller86/guides/master/s
 wget -O minima.sh https://raw.githubusercontent.com/shmeller86/guides/master/minima.sh && chmod +x minima.sh && ./minima.sh
 ```
 
-### MINIMA
+### MASSA
 ```console
 wget -O massa.sh https://raw.githubusercontent.com/shmeller86/guides/master/massa.sh && chmod +x massa.sh && ./massa.sh
 ```
