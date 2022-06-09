@@ -48,11 +48,22 @@ LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/massa-node.service
 
+sudo systemctl daemon-reload
+sudo systemctl enable massa-node
+sudo systemctl restart massa-node
 
+echo -e '\033[0;32m'
+echo -e 'INSTALLED'                                                                
+echo -e '\033[0m'
 
-
-
-	local config_path="$HOME/massa/massa-node/base_config/config.toml"
+}
+function updateNode {
+echo -e '\033[0;37'
+echo -e 'NOTHING'                                                                
+echo -e '\033[0m'
+}
+function updateBootstrap {
+local config_path="$HOME/massa/massa-node/base_config/config.toml"
 	local bootstrap_list=`wget -qO- https://raw.githubusercontent.com/SecorD0/Massa/main/bootstrap_list.txt | shuf -n50 | awk '{ print "        "$0"," }'`
 	local len=`wc -l < "$config_path"`
 	local start=`grep -n bootstrap_list "$config_path" | cut -d: -f1`
@@ -73,24 +84,7 @@ ${bootstrap_list}
 		printf_n "
 You can view the node bootstrapping via ${C_LGn}massa_log${RES} command
 "
-	fi	
-
-
-
-
-sudo systemctl daemon-reload
-sudo systemctl enable massa-node
-sudo systemctl restart massa-node
-
-echo -e '\033[0;32m'
-echo -e 'INSTALLED'                                                                
-echo -e '\033[0m'
-
-}
-function updateNode {
-echo -e '\033[0;37'
-echo -e 'NOTHING'                                                                
-echo -e '\033[0m'
+	fi
 }
 function deleteNode {
 
@@ -106,7 +100,7 @@ echo -e '\033[0m'
 }
 
 PS3='Please enter your choice: '
-options=("Install" "Update" "Delete" "Quit")
+options=("Install" "Update" "Delete" "UpdateBootstrap" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -118,6 +112,9 @@ do
             ;;
         "Delete")
             deleteNode
+            ;;
+        "UpdateBootstrap")
+            updateBootstrap
             ;;
         "Quit")
             break
