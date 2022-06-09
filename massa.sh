@@ -25,6 +25,7 @@ function installNode {
 cd ~;
 sudo apt update && sudo apt upgrade -y;
 sudo apt install pkg-config curl git build-essential wget jq libssl-dev -y;
+sudo apt-get install libclang-dev -y;
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh;
 source $HOME/.cargo/env;
 rustup toolchain install nightly;
@@ -91,7 +92,7 @@ function deleteNode {
 sudo systemctl stop massa-node
 sudo systemctl disable massa-node
 sudo systemctl daemon-reload
-rm -Rf $home/massa
+rm -Rf /$HOME/massa
 
 echo -e '\033[0;31m'
 echo -e 'DELETED'                                                                
