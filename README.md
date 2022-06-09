@@ -12,3 +12,8 @@ wget -O minima.sh https://raw.githubusercontent.com/shmeller86/guides/master/min
 ```console
 wget -O massa.sh https://raw.githubusercontent.com/shmeller86/guides/master/massa.sh && chmod +x massa.sh && ./massa.sh
 ```
+
+### STARKNET
+```console
+wget -O starknet.sh https://raw.githubusercontent.com/shmeller86/guides/master/starknet.sh && chmod +x starknet.sh && ./starknet.sh
+```
