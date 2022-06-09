@@ -17,3 +17,8 @@ wget -O massa.sh https://raw.githubusercontent.com/shmeller86/guides/master/mass
 ```console
 wget -O starknet.sh https://raw.githubusercontent.com/shmeller86/guides/master/starknet.sh && chmod +x starknet.sh && ./starknet.sh
 ```
+
+### UPTICK
+```console
+wget -O uptick.sh https://raw.githubusercontent.com/shmeller86/guides/master/uptick.sh && chmod +x uptick.sh && ./uptick.sh
+```
