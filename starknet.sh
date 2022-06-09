@@ -30,9 +30,9 @@ rm /etc/systemd/system/starknet*
 }
 
 function updateNode {
-    echo -e '\033[0;37'
-    echo -e 'NOTHING 🤫'                                                                
-    echo -e '\033[0m'
+echo -e '\033[0;37'
+echo -e 'NOTHING 🤫'                                                                
+echo -e '\033[0m'
 }
 
 function installNode {
