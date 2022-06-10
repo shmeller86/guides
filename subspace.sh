@@ -25,11 +25,12 @@ echo -e '\033[0m'
 function deleteNode {
 systemctl stop subspace-node subspace-farmer
 systemctl disable subspace-node subspace-farmer
-deluser subspace
+# deluser subspace
 rm -rf /var/lib/subspace
 rm -rf /root/.local/share/subspace*
-rm /usr/local/bin/subspace*
+# rm /usr/local/bin/subspace*
 rm /etc/systemd/system/subspace*
+rm $HOME/subspace/subspace*
 }
 
 function updateNode {
@@ -59,8 +60,8 @@ VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/late
 VERSION=gemini-1b-2022-jun-08
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
-mv subspace* /usr/local/bin/
-chmod +x /usr/local/bin/subspace*
+mv subspace* $HOME/subspace/
+chmod +x $HOME/subspace/subspace*
 
 if [ $TYPE == 1 ]
 then
@@ -70,7 +71,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 --chain gemini-1 \
 --execution wasm \
 --pruning 1024 \
@@ -108,7 +109,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 $(wget -qO- https://raw.githubusercontent.com/shmeller86/guides/master/subspace_addr.txt) \
 --chain gemini-1 \
 --execution wasm \
@@ -131,7 +132,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 --chain gemini-1 \
 --execution wasm \
 --pruning 1024 \
@@ -156,7 +157,7 @@ After=subspace-node.service
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
+ExecStart=$HOME/subspace/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65535
@@ -190,8 +191,8 @@ cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
-mv subspace* /usr/local/bin/
-chmod +x /usr/local/bin/subspace*
+mv subspace* $HOME/subspace/
+chmod +x $HOME/subspace/subspace*
 
 if [ $TYPE == 1 ]
 then
@@ -201,7 +202,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 --chain gemini-1 \
 --execution wasm \
 --pruning 1024 \
@@ -239,7 +240,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 $(wget -qO- https://raw.githubusercontent.com/shmeller86/guides/master/subspace_addr.txt) \
 --chain gemini-1 \
 --execution wasm \
@@ -262,7 +263,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-node \
+ExecStart=$HOME/subspace/subspace-node \
 --chain gemini-1 \
 --execution wasm \
 --pruning 1024 \
@@ -287,7 +288,7 @@ After=subspace-node.service
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
+ExecStart=$HOME/subspace/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65535
