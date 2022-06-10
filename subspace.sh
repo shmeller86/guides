@@ -320,7 +320,7 @@ systemctl start subspace-node subspace-farmer
 }
 
 PS3='Please enter your choice: '
-options=("Install" "Update" "Delete" "Quit")
+options=("Install" "Update" "Delete" "Reset" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -332,6 +332,9 @@ do
             ;;
         "Delete")
             deleteNode
+            ;;
+        "Reset")
+            resetNode
             ;;
         "Quit")
             break
