@@ -192,7 +192,6 @@ wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VE
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
 mv subspace* /usr/local/bin/
 chmod +x /usr/local/bin/subspace*
-adduser --system --home=/var/lib/subspace subspace
 
 if [ $TYPE == 1 ]
 then
