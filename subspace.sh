@@ -33,6 +33,18 @@ rm /etc/systemd/system/subspace*
 rm -Rf $HOME/subspace*
 }
 
+function resetNode {
+    systemctl stop subspace-node subspace-farmer
+    sleep 1
+    # Replace `FARMER_FILE_NAME` with the name of the node file you downloaded from releases
+    $HOME/subspace/subspace-farmer wipe
+    sleep 1
+    # Replace `NODE_FILE_NAME` with the name of the node file you downloaded from releases
+    $HOME/subspace/subspace-node purge-chain --chain gemini-1
+    sleep 1
+    systemctl stop subspace-node subspace-farmer
+}
+
 function updateNode {
 systemctl stop subspace-node
 systemctl stop subspace-farmer
