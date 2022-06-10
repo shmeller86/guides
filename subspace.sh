@@ -69,7 +69,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 --chain gemini-1 \
 --execution wasm \
@@ -107,7 +107,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 $(wget -qO- https://raw.githubusercontent.com/shmeller86/guides/master/subspace_addr.txt) \
 --chain gemini-1 \
@@ -130,7 +130,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 --chain gemini-1 \
 --execution wasm \
@@ -155,7 +155,7 @@ After=network.target
 After=subspace-node.service
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
 Restart=on-failure
 RestartSec=10
@@ -200,7 +200,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 --chain gemini-1 \
 --execution wasm \
@@ -238,7 +238,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 $(wget -qO- https://raw.githubusercontent.com/shmeller86/guides/master/subspace_addr.txt) \
 --chain gemini-1 \
@@ -261,7 +261,7 @@ Description=Subspace Node
 After=network.target
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-node \
 --chain gemini-1 \
 --execution wasm \
@@ -286,7 +286,7 @@ After=network.target
 After=subspace-node.service
 [Service]
 Type=simple
-User=subspace
+User=root
 ExecStart=/usr/local/bin/subspace-farmer farm --reward-address $SUBSPACE_WALLET_ADDRESS --plot-size 200G
 Restart=on-failure
 RestartSec=10
