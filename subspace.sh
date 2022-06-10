@@ -30,7 +30,7 @@ rm -rf /var/lib/subspace
 rm -rf /root/.local/share/subspace*
 # rm /usr/local/bin/subspace*
 rm /etc/systemd/system/subspace*
-rm $HOME/subspace*
+rm -Rf $HOME/subspace*
 }
 
 function updateNode {
