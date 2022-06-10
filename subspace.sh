@@ -57,10 +57,12 @@ echo "export SUBSPACE_NODE_NAME="$SUBSPACE_NODE_NAME"" >> ~/.bash_profile
 
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
-VERSION=gemini-1b-2022-jun-08
+# VERSION=gemini-1b-2022-jun-08
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
-mv subspace* $HOME/subspace/
+mkdir subspace
+mv subspace-node $HOME/subspace/
+mv subspace-farmer $HOME/subspace/
 chmod +x $HOME/subspace/subspace*
 
 if [ $TYPE == 1 ]
@@ -189,9 +191,14 @@ echo "export SUBSPACE_NODE_NAME="$SUBSPACE_NODE_NAME"" >> ~/.bash_profile
 
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
+
+printf "subspace version: ${VERSION}"
+sleep 2
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
-mv subspace* $HOME/subspace/
+mkdir subspace
+mv subspace-node $HOME/subspace/
+mv subspace-farmer $HOME/subspace/
 chmod +x $HOME/subspace/subspace*
 
 if [ $TYPE == 1 ]
