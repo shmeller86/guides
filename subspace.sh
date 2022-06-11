@@ -42,7 +42,7 @@ function resetNode {
     # Replace `NODE_FILE_NAME` with the name of the node file you downloaded from releases
     $HOME/subspace/subspace-node purge-chain --chain gemini-1
     sleep 1
-    systemctl stop subspace-node subspace-farmer
+    systemctl start subspace-node subspace-farmer
 }
 
 function updateNode {
@@ -69,7 +69,7 @@ echo "export SUBSPACE_NODE_NAME="$SUBSPACE_NODE_NAME"" >> ~/.bash_profile
 
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
-VERSION=gemini-1b-2022-jun-08
+# VERSION=emini-1b-2022-jun-10
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
 wget -O subspace-farmer https://github.com/subspace/subspace/releases/download/$VERSION/subspace-farmer-ubuntu-x86_64-$VERSION
 mkdir subspace
@@ -203,7 +203,7 @@ echo "export SUBSPACE_NODE_NAME="$SUBSPACE_NODE_NAME"" >> ~/.bash_profile
 
 cd ~
 VERSION=$(wget -qO- https://api.github.com/repos/subspace/subspace/releases/latest | jq -r ".tag_name")
-VERSION=gemini-1b-2022-jun-08
+# VERSION=emini-1b-2022-jun-10
 printf "subspace version: ${VERSION}"
 sleep 2
 wget -O subspace-node https://github.com/subspace/subspace/releases/download/$VERSION/subspace-node-ubuntu-x86_64-$VERSION
