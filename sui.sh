@@ -36,6 +36,7 @@ source ~/.bash_profile;
 GITADDR_DEFAULT=$GITADDR
 read -p "Your sui git repository: [default:$GITADDR_DEFAULT | example: https://github.com/shmeller86/sui.git]" GITADDR
 GITADDR="${GITADDR:-$GITADDR_DEFAULT}"
+echo "export GITADDR="$GITADDR"" >> ~/.bash_profile
 
 apt-get update && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y --no-install-recommends tzdata git ca-certificates curl build-essential libssl-dev pkg-config libclang-dev cmake
 apt install cargo -y
