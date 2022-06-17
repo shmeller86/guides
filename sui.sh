@@ -25,6 +25,7 @@ echo -e '\033[0m'
 function deleteNode {
 systemctl stop sui-node
 systemctl disable sui-node
+rm /etc/systemd/system/sui-node*
 rm -rf $HOME/sui
 }
 
@@ -45,7 +46,33 @@ git fetch upstream
 git checkout --track upstream/devnet
 cp crates/sui-config/data/fullnode-template.yaml fullnode.yaml
 curl -fLJO https://github.com/MystenLabs/sui-genesis/raw/main/devnet/genesis.blob
-cargo run --release --bin sui-node -- --config-path fullnode.yaml
+cargo build --release --bin sui-node
+
+sudo tee <<EOF >/dev/null /etc/systemd/journald.conf
+Storage=persistent
+EOF
+sudo systemctl restart systemd-journald
+
+sudo tee <<EOF >/dev/null /etc/systemd/system/sui-node.service
+[Unit]
+Description=SUI Node
+After=network.target
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=$HOME/sui
+ExecStart=cargo run --release --bin sui-node -- --config-path fullnode.yaml
+Restart=always
+RestartSec=10
+LimitNOFILE=10000
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl restart systemd-journald
+sudo systemctl daemon-reload
+sudo systemctl enable sui-node
+sudo systemctl restart sui-node
 }
 
 PS3='Please enter your choice: '
