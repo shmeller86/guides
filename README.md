@@ -27,3 +27,8 @@ wget -O uptick.sh https://raw.githubusercontent.com/shmeller86/guides/master/upt
 ```console
 wget -O gear.sh https://raw.githubusercontent.com/shmeller86/guides/master/gear.sh && chmod +x gear.sh && ./gear.sh
 ```
+
+### SUI
+```console
+wget -O sui.sh https://raw.githubusercontent.com/shmeller86/guides/master/sui.sh && chmod +x sui.sh && ./sui.sh
+```
