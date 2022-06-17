@@ -12,7 +12,7 @@
 echo -e '\033[1;36m'
 echo -e ' Me     : https://t.me/chelovek86       | | # \                                      |  '
 echo -e ' Channel: https://t.me/xx_log_xx        | ____ \_________|----^"|"""""|"\___________ |  '
-echo -e ' Github : https://github.com/shmeller86  \___\   F1 + 94 >>    `""""""""     =====  "|D '
+echo -e ' Github : https://github.com/shmeller86  \___\   F1 + 04 >>    `""""""""     =====  "|D '
 echo -e ' Web    : https://4trading.app                 ^^-------____--""""""""""+""--_  __--"|  '
 echo -e '                                                           `""|"-->####)+---|`""     |  '
 echo -e '                                                                \  \                    '
