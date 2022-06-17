@@ -76,7 +76,7 @@ sudo systemctl restart sui-node
 }
 
 PS3='Please enter your choice: '
-options=("Install" "Update" "Delete" "Reset" "Quit")
+options=("Install" "Delete" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
