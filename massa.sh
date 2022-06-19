@@ -59,8 +59,16 @@ echo -e '\033[0m'
 
 }
 function updateNode {
-echo -e '\033[0;37'
-echo -e 'NOTHING'                                                                
+systemctl stop massa-node
+cd $HOME/massa/
+git stash
+git remote set-url origin https://github.com/massalabs/massa.git
+git checkout testnet
+git pull
+systemctl start
+massa-node
+echo -e '\033[0;32m'
+echo -e 'UPDATED'                                                                
 echo -e '\033[0m'
 }
 function updateBootstrap {
