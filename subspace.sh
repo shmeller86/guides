@@ -45,6 +45,8 @@ function resetNode {
     systemctl start subspace-node subspace-farmer
 }
 
+
+
 function updateNode {
 systemctl stop subspace-node
 systemctl stop subspace-farmer
