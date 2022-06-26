@@ -52,6 +52,7 @@ systemctl stop subspace-node
 systemctl stop subspace-farmer
 sleep 1
 
+
 source ~/.bash_profile;
 
 SUBSPACE_WALLET_ADDRESS_DEFAULT=$SUBSPACE_WALLET_ADDRESS
